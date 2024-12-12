@@ -20,7 +20,7 @@ export default function Home() {
             <h5 className="text-zinc-950 font-bold ml-4">Faça seu logon</h5>
             <Input placeholder="Your username" className="bg-zinc-100 text-zinc-400 m-4"/>
             <Input placeholder="Password" className="bg-zinc-100 text-zinc-400 text-lg m-4"/>
-            <Button className="w-full bg-red-600 ml-4">Entrar</Button>
+            <Button className="w-full bg-red-600 ml-4 font-bold">Entrar</Button>
           </div>
 
           <div className="mt-8">
