@@ -14,7 +14,7 @@ export function Header() {
             <Button variant="ghost">Bem vinda, APAD</Button>
           </div>
           <div className="ml-4 p-2">
-            <Button variant="secondary" className="w-full bg-red-600 ml-4 font-bold text-zinc-100">
+            <Button variant="secondary" className="w-full bg-red-600 ml-4 font-bold text-zinc-100 text-xs">
               Cadastrar Novo Caso
             </Button>
           </div>
