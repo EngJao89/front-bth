@@ -1,10 +1,15 @@
+'use client'
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { RxArrowLeft } from "react-icons/rx";
 
 import logo from "../../../public/Logo.png"
 import { Button } from "@/components/ui/button";
 
 export default function Register() {
+  const router = useRouter();
+
   return (
     <div className="flex justify-around items-center h-screen">
       <div>
@@ -17,7 +22,7 @@ export default function Register() {
             Faça seu cadastro, entre na plataforma e ajude<br/> pessoas a encontrarem os casos da sua ONG.
           </h3>
 
-          <Button variant="ghost" className="w-full mt-20 font-bold text-sm">
+          <Button variant="ghost" className="w-full mt-20 font-bold text-sm" onClick={() => router.push('/')}>
             <RxArrowLeft color="red" size={24}/>
             Voltar para o Logon
           </Button>
