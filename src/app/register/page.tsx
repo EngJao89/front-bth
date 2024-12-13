@@ -6,13 +6,14 @@ import { RxArrowLeft } from "react-icons/rx";
 
 import logo from "../../../public/Logo.png"
 import { Button } from "@/components/ui/button";
+import { ProfileForm } from "@/components/forms";
 
 export default function Register() {
   const router = useRouter();
 
   return (
-    <div className="flex justify-around items-center h-screen">
-      <div>
+    <div className="flex justify-between items-center h-screen">
+      <div className="flex flex-col w-1/2 items-center justify-center">
         <div>
           <Image src={logo} alt="Logo"/>
         </div>
@@ -27,6 +28,9 @@ export default function Register() {
             Voltar para o Logon
           </Button>
         </div>
+      </div>
+      <div className="flex flex-col w-1/2 items-center justify-center">
+        <ProfileForm />
       </div>
     </div>
   )
