@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { ToastContainer} from 'react-toastify';
+
 import { Theme } from "@radix-ui/themes";
+import 'react-toastify/dist/ReactToastify.css';
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Theme>
+          <ToastContainer autoClose={1500}/>
           {children}
         </Theme>
       </body>
