@@ -51,8 +51,6 @@ export default function Home() {
 
       const response = await api.post('auth/login', data);
 
-      console.log(response);
-
       if (response.data.accessToken) {
         localStorage.setItem('authToken', response.data.accessToken);
         toast.success(`Login in user: ${data.email} successfully!`, {theme: "light"})
