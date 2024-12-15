@@ -1,20 +1,79 @@
-import { useState } from "react";
+'use client';
+
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import axios, { AxiosError } from 'axios';
+import api from '@/lib/axios';
 import { useRouter } from "next/navigation";
 import { FaPowerOff } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 import logoHeader from "../../../public/logo-header.png";
 import { Button } from "../ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+
+interface UserData {
+  accessToken: string;
+}
 
 export function Header() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const router = useRouter();
+  const { token, setToken } = useAuth();
+
+  const fetchUserData = useCallback(async () => {
+    try {
+      if (!token) {
+        router.push('/');
+        throw new Error('No token available');
+      }
+
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await api.get<UserData>('users', { headers });
+      setUserData(response.data);
+
+      localStorage.setItem('userData', JSON.stringify(response.data));
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<any>;
+        if (axiosError.response) {
+          if (axiosError.response.status === 401 || axiosError.response.data.error === 'Invalid Token') {
+            handleLogout();
+          }
+          console.error('Error fetching user data:', axiosError.response.data);
+          toast.error(`Error fetching user data: ${axiosError.response.data.message}`, { theme: "dark" });
+        } else if (axiosError.request) {
+          console.error('Error fetching user data: No response from server.');
+          toast.error('Error fetching user data. No response from server.', { theme: "dark" });
+        } else {
+          console.error('Error fetching user data:', axiosError.message);
+          toast.error(`Error fetching user data: ${axiosError.message}`, { theme: "dark" });
+        }
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
+  }, [token]);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+    if (storedToken) {
+      setToken(storedToken);
+      fetchUserData();
+    } else {
+      router.replace('/');
+    }
+  }, [setToken, fetchUserData, router]);
 
   function handleLogout() {
     localStorage.removeItem('authToken');
     setToken(null);
     toast.warn('User Logged Out', { theme: "dark" });
-    router.replace('/login');
+    router.replace('/');
   }
 
   return (
@@ -33,7 +92,12 @@ export function Header() {
             </Button>
           </div>
           <div>
-            <Button variant="outline" size="icon" className="bg-zinc-100 hover:bg-zinc-200">
+            <Button 
+              onClick={handleLogout}
+              variant="outline" 
+              size="icon" 
+              className="bg-zinc-100 hover:bg-zinc-200"
+            >
               <FaPowerOff color="red" size={16}/>
             </Button>
           </div>

@@ -5,6 +5,7 @@ import { ToastContainer} from 'react-toastify';
 import { Theme } from "@radix-ui/themes";
 import 'react-toastify/dist/ReactToastify.css';
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,14 +29,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Theme>
-          <ToastContainer autoClose={1500}/>
-          {children}
-        </Theme>
-      </body>
+      <AuthProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <Theme>
+            <ToastContainer autoClose={1500}/>
+            {children}
+          </Theme>
+        </body>
+      </AuthProvider>
     </html>
   );
 }
