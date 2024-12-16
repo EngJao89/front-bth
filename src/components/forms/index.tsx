@@ -19,10 +19,10 @@ import { useRouter } from "next/navigation";
 
 
 const registerSchema = z.object({
-  name: z.string().min(3, "Username is required"),
-  email: z.string().email("Email is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  phone: z.string().min(13, "Phone must be at least 13 characters"),
+  name: z.string().min(3, "Nome de usuário é obrigatório"),
+  email: z.string().email("E-mail é obrigatório"),
+  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+  phone: z.string().min(13, "O telefone deve ter pelo menos 13 caracteres"),
 });
 
 export type RegisterSchema = z.infer<typeof registerSchema>;
@@ -46,7 +46,7 @@ export function ProfileForm() {
       });
 
       if(response.status === 200 || response.status === 201){
-        toast.success('User created successfully', {theme: "light"})
+        toast.success('Usuário criado com sucesso', {theme: "light"})
         router.replace('/');
       }
     } catch (error: any) {
@@ -56,19 +56,19 @@ export function ProfileForm() {
         if (error.response) {
           console.error('Server response:', error.response.data);
           toast.error(
-            'Registration failed: ' + (error.response.data.message || 
-            'Please check your information and try again.'), 
+            'O registro falhou: ' + (error.response.data.message || 
+            'Por favor, verifique suas informações e tente novamente.'), 
             {theme: "light"}
           );
         } else if (error.request) {
-          console.error('Request error:', error.request);
-          toast.error('Registration failed: No response from server.', {theme: "light"});
+          console.error('Erro de solicitação:', error.request);
+          toast.error('Falha no registro: Nenhuma resposta do servidor.', {theme: "light"});
         } else {
           console.error('Unexpected error:', error.message);
-          toast.error('Registration failed: ' + error.message, {theme: "light"});
+          toast.error('O registro falhou: ' + error.message, {theme: "light"});
         }
       } else {
-        toast.error('An unexpected error occurred. Please try again later.', {theme: "light"});
+        toast.error('Ocorreu um erro inesperado. Tente novamente mais tarde.', {theme: "light"});
       }
     }
   };
@@ -84,8 +84,7 @@ export function ProfileForm() {
               <FormControl>
                 <Input placeholder="name" {...field} className=""/>
               </FormControl>
-              <FormMessage />
-              {errors.name && <FormMessage className="text-white">{errors.name.message}</FormMessage>}
+              {errors.name && <FormMessage className="text-zinc-500">{errors.name.message}</FormMessage>}
             </FormItem>
           )}
         />
@@ -98,7 +97,7 @@ export function ProfileForm() {
               <FormControl>
                 <Input placeholder="Email" {...field} className="mt-4"/>
               </FormControl>
-              <FormMessage />
+              {errors.email && <FormMessage className="text-zinc-500">{errors.email.message}</FormMessage>}
             </FormItem>
           )}
         />
@@ -111,7 +110,7 @@ export function ProfileForm() {
               <FormControl>
                 <Input placeholder="Password" {...field} className="mt-4"/>
               </FormControl>
-              <FormMessage />
+              {errors.password && <FormMessage className="text-zinc-500">{errors.password.message}</FormMessage>}
             </FormItem>
           )}
         />
@@ -124,7 +123,7 @@ export function ProfileForm() {
               <FormControl>
                 <Input placeholder="Phone" {...field} className="mt-4"/>
               </FormControl>
-              <FormMessage />
+              {errors.phone && <FormMessage className="text-zinc-500">{errors.phone.message}</FormMessage>}
             </FormItem>
           )}
         />
