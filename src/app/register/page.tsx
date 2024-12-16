@@ -8,7 +8,7 @@ import logo from "../../../public/Logo.png"
 import { Button } from "@/components/ui/button";
 import { ProfileForm } from "@/components/forms";
 
-export default function Register() {
+export default function UserRegister() {
   const router = useRouter();
 
   return (
@@ -18,7 +18,7 @@ export default function Register() {
           <Image src={logo} alt="Logo"/>
         </div>
         <div className="mt-16">
-          <h5 className="text-zinc-950 font-bold text-xl">Cadastro</h5>
+          <h5 className="text-zinc-950 font-bold text-xl">Cadastro Usuários</h5>
           <h3 className="text-zinc-400 text-xs mt-6">
             Faça seu cadastro, entre na plataforma e ajude<br/> pessoas a encontrarem os casos da sua ONG.
           </h3>
