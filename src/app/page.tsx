@@ -45,27 +45,27 @@ export default function Home() {
   const onSubmit = async (data: LoginSchema) => {
     try {
       if (!data.email || !data.password) {
-        toast.warning('Please provide both username and password', {theme: "light"});
-        throw new Error('Please provide both username and password');
+        toast.warning('Por favor, forneça o nome de usuário e a senha', {theme: "light"});
+        throw new Error('Por favor, forneça o nome de usuário e a senha');
       }
 
       const response = await api.post('auth/login', data);
 
       if (response.data.accessToken) {
         localStorage.setItem('authToken', response.data.accessToken);
-        toast.success(`Login in user: ${data.email} successfully!`, {theme: "light"})
+        toast.success(`Usuário Logado: ${data.email}, Seja Bem vindo!`, {theme: "light"})
         router.replace('/dashboard');
       } else {
-        toast.error('Token not found in response', {theme: "light"})
-        throw new Error('Token not found in response');
+        toast.error('Token não encontrado na resposta', {theme: "light"})
+        throw new Error('Token não encontrado na resposta');
       }
     } catch (error) {
       console.error('Erro:', error);
       if (axios.isAxiosError(error)) {
-        const axiosError = error.response?.data?.message || 'Login failed. Please check your credentials and try again.';
+        const axiosError = error.response?.data?.message || 'Login falhou. Por favor, verifique suas credenciais e tente novamente.';
         toast.error(axiosError, {theme: "light"});
       } else {
-        toast.error('An unexpected error has occurred. Try again later.', {theme: "light"});
+        toast.error('Ocorreu um erro inesperado. Tente novamente mais tarde.', {theme: "light"});
       }
     }
   };
@@ -89,7 +89,7 @@ export default function Home() {
                       <FormItem>
                         <FormLabel className="text-white">Username</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your username" {...field} className="bg-zinc-100 text-zinc-400 m-4" />
+                          <Input placeholder="Seu Usuário" {...field} className="bg-zinc-100 text-zinc-400 m-4" />
                         </FormControl>
                         {errors.email && <FormMessage className="text-white">{errors.email.message}</FormMessage>}
                       </FormItem>
@@ -102,7 +102,7 @@ export default function Home() {
                       <FormItem>
                         <FormLabel className="text-white">Password</FormLabel>
                         <FormControl>
-                          <Input type="password" placeholder="Password" {...field} className="bg-zinc-100 text-zinc-400 text-lg m-4" />
+                          <Input type="password" placeholder="Sua senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg m-4" />
                         </FormControl>
                         {errors.password && <FormMessage className="text-white">{errors.password.message}</FormMessage>}
                       </FormItem>
