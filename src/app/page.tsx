@@ -19,8 +19,8 @@ import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 const loginSchema = z.object({
-  email: z.string().email("Email is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  email: z.string().email("E-mail é obrigatório"),
+  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
 export type LoginSchema = z.infer<typeof loginSchema>;
