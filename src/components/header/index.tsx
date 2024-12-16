@@ -11,8 +11,11 @@ import { toast } from "react-toastify";
 import logoHeader from "../../../public/logo-header.png";
 import { Button } from "../ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-
 interface UserData {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
   accessToken: string;
 }
 
@@ -33,7 +36,7 @@ export function Header() {
         Authorization: `Bearer ${token}`,
       };
 
-      const response = await api.get<UserData>('users', { headers });
+      const response = await api.post<UserData>('auth/me', {}, { headers });
       setUserData(response.data);
 
       localStorage.setItem('userData', JSON.stringify(response.data));
@@ -45,19 +48,19 @@ export function Header() {
             handleLogout();
           }
           console.error('Error fetching user data:', axiosError.response.data);
-          toast.error(`Error fetching user data: ${axiosError.response.data.message}`, { theme: "dark" });
+          toast.error(`Error fetching user data: ${axiosError.response.data.message}`, { theme: "light" });
         } else if (axiosError.request) {
           console.error('Error fetching user data: No response from server.');
-          toast.error('Error fetching user data. No response from server.', { theme: "dark" });
+          toast.error('Error fetching user data. No response from server.', { theme: "light" });
         } else {
           console.error('Error fetching user data:', axiosError.message);
-          toast.error(`Error fetching user data: ${axiosError.message}`, { theme: "dark" });
+          toast.error(`Error fetching user data: ${axiosError.message}`, { theme: "light" });
         }
       } else {
         console.error('Unexpected error:', error);
       }
     }
-  }, [token]);
+  }, [token, router, handleLogout]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
@@ -72,7 +75,7 @@ export function Header() {
   function handleLogout() {
     localStorage.removeItem('authToken');
     setToken(null);
-    toast.warn('User Logged Out', { theme: "dark" });
+    toast.warn('Você saiu! Até breve...', { theme: "light" });
     router.replace('/');
   }
 
@@ -84,7 +87,7 @@ export function Header() {
             <Image src={logoHeader} alt="Logo Header"/>
           </div>
           <div className="ml-4 p-2">
-            <Button variant="ghost">Bem vinda, APAD</Button>
+            <Button variant="ghost">Bem vindo(a), {userData?.name ? userData.name : "Usuário"}</Button>
           </div>
           <div className="ml-4 p-2">
             <Button variant="secondary" className="w-full bg-red-600 hover:bg-red-700 ml-4 font-bold text-zinc-100 text-xs">
