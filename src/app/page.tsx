@@ -81,7 +81,7 @@ export default function Home() {
           <div className="mt-16">
             <h5 className="text-zinc-950 font-bold ml-4">Faça seu logon</h5>
               <FormProvider {...methods}>
-                <form onSubmit={handleSubmit(onSubmit)} className="relative z-10 space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="relative z-10">
                   <FormField
                     name="email"
                     control={methods.control}
@@ -89,7 +89,7 @@ export default function Home() {
                       <FormItem>
                         <FormLabel className="text-white">Username</FormLabel>
                         <FormControl>
-                          <Input placeholder="Seu Usuário" {...field} className="bg-zinc-100 text-zinc-400 m-4" />
+                          <Input placeholder="Seu Usuário" {...field} className="bg-zinc-100 text-zinc-400 ml-4" />
                         </FormControl>
                         {errors.email && <FormMessage className="text-white">{errors.email.message}</FormMessage>}
                       </FormItem>
@@ -102,13 +102,13 @@ export default function Home() {
                       <FormItem>
                         <FormLabel className="text-white">Password</FormLabel>
                         <FormControl>
-                          <Input type="password" placeholder="Sua senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg m-4" />
+                          <Input type="password" placeholder="Sua senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg ml-4" />
                         </FormControl>
                         {errors.password && <FormMessage className="text-white">{errors.password.message}</FormMessage>}
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full bg-red-600 ml-4 font-bold">Entrar</Button>
+                  <Button type="submit" className="w-full bg-red-600 ml-4 mt-8 font-bold">Entrar</Button>
                 </form>
               </FormProvider>
           </div>
