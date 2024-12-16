@@ -77,7 +77,7 @@ export function Header() {
   }
 
   return (
-    <nav className="w-full bg-zinc-300 bg-opacity-30 backdrop-blur-lg fixed">
+    <nav className="w-full bg-zinc-300 bg-opacity-30 backdrop-blur-lg">
       <div className="container mx-auto px-3 py-3 h-full">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center">
