@@ -79,7 +79,7 @@ export default function Home() {
           </div>
 
           <div className="mt-16">
-            <h5 className="text-zinc-950 font-bold ml-4">Faça seu logon</h5>
+            <h5 className="text-zinc-950 font-bold ml-4">Login Usuário</h5>
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)} className="relative z-10">
                   <FormField
@@ -117,6 +117,13 @@ export default function Home() {
             <Button variant="ghost" className="w-full ml-4 font-bold text-sm" onClick={() => router.push('/register')}>
               <RxEnter color="red" size={24}/>
               Não tenho cadastro
+            </Button>
+          </div>
+
+          <div className="mt-8">
+            <Button variant="ghost" className="w-full ml-4 font-bold text-sm" onClick={() => router.push('/auth-ong')}>
+              <RxEnter color="red" size={24}/>
+              É Ong? Clique aqui para login.
             </Button>
           </div>
         </div>
