@@ -18,40 +18,40 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-const loginSchema = z.object({
+const loginOngSchema = z.object({
   email: z.string().email("E-mail é obrigatório"),
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
-export type LoginSchema = z.infer<typeof loginSchema>;
+export type LoginOngSchema = z.infer<typeof loginOngSchema>;
 export default function AuthOng() {
   const router = useRouter();
-  const methods = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
+  const methods = useForm<LoginOngSchema>({
+    resolver: zodResolver(loginOngSchema),
   });
 
   const { handleSubmit, formState: { errors } } = methods;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('authOngToken');
       if (token) {
         router.replace('/dashboard');
       }
     }
   }, [router]);
 
-  const onSubmit = async (data: LoginSchema) => {
+  const onSubmit = async (data: LoginOngSchema) => {
     try {
       if (!data.email || !data.password) {
         toast.warning('Por favor, forneça o nome de usuário e a senha', {theme: "light"});
         throw new Error('Por favor, forneça o nome de usuário e a senha');
       }
 
-      const response = await api.post('auth/login', data);
+      const response = await api.post('auth-ong/login', data);
 
       if (response.data.accessToken) {
-        localStorage.setItem('authToken', response.data.accessToken);
+        localStorage.setItem('authOngToken', response.data.accessToken);
         toast.success(`Usuário Logado: ${data.email}, Seja Bem vindo!`, {theme: "light"})
         router.replace('/dashboard');
       } else {
