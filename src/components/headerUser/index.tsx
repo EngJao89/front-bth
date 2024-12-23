@@ -19,21 +19,21 @@ interface UserData {
   accessToken: string;
 }
 
-export function Header() {
+export function HeaderUser() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const router = useRouter();
-  const { token, setToken } = useAuth();
+  const { userToken, setUserToken } = useAuth();
 
   const fetchUserData = useCallback(async () => {
     try {
-      if (!token) {
+      if (!userToken) {
         router.push('/');
         throw new Error('No token available');
       }
 
       const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userToken}`,
       };
 
       const response = await api.post<UserData>('auth/me', {}, { headers });
@@ -60,21 +60,21 @@ export function Header() {
         console.error('Unexpected error:', error);
       }
     }
-  }, [token, router, handleLogout]);
+  }, [userToken, router, handleLogout]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     if (storedToken) {
-      setToken(storedToken);
+      setUserToken(storedToken);
       fetchUserData();
     } else {
       router.replace('/');
     }
-  }, [setToken, fetchUserData, router]);
+  }, [setUserToken, fetchUserData, router]);
 
   function handleLogout() {
     localStorage.removeItem('authToken');
-    setToken(null);
+    setUserToken(null);
     toast.warn('Você saiu! Até breve...', { theme: "light" });
     router.replace('/');
   }
