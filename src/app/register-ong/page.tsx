@@ -6,6 +6,7 @@ import { RxArrowLeft } from "react-icons/rx";
 
 import logo from "../../../public/Logo.png"
 import { Button } from "@/components/ui/button";
+import { ProfileOngForm } from "@/components/forms-ong";
 //import { ProfileForm } from "@/components/forms";
 
 export default function RegisterOng() {
@@ -23,14 +24,14 @@ export default function RegisterOng() {
             Faça seu cadastro, entre na plataforma e ajude<br/> pessoas a encontrarem os casos da sua ONG.
           </h3>
 
-          <Button variant="ghost" className="w-full mt-20 font-bold text-sm" onClick={() => router.push('/')}>
+          <Button variant="ghost" className="w-full mt-20 font-bold text-sm" onClick={() => router.push('/auth-ong')}>
             <RxArrowLeft color="red" size={24}/>
-            Voltar para o Logon
+            Voltar para o Login de Ongs
           </Button>
         </div>
       </div>
       <div className="flex flex-col w-1/2 items-center justify-center">
-        {/* <ProfileForm /> */}
+        <ProfileOngForm />
       </div>
     </div>
   )

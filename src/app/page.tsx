@@ -100,7 +100,7 @@ export default function Home() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input type="password" placeholder="Sua senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg ml-4 mt-6" />
+                          <Input type="password" placeholder="Sua Senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg ml-4 mt-6" />
                         </FormControl>
                         {errors.password && <FormMessage className="text-zinc-300">{errors.password.message}</FormMessage>}
                       </FormItem>
