@@ -3,23 +3,39 @@
 import { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
 
 interface AuthContextType {
-  token: string | null;
-  setToken: (token: string | null) => void;
+  userToken: string | null;
+  setUserToken: (token: string | null) => void;
+  ongToken: string | null;
+  setOngToken: (token: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null);
+  const [userToken, setUserToken] = useState<string | null>(null);
+  const [ongToken, setOngToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('authToken');
-    if (storedToken) {
-      setToken(storedToken);
+    const storedUserToken = localStorage.getItem('authToken');
+    if (storedUserToken) {
+      setUserToken(storedUserToken);
+    }
+
+    const storedOngToken = localStorage.getItem('authOngToken');
+    if (storedOngToken) {
+      setOngToken(storedOngToken);
     }
   }, []);
 
-  const value = useMemo(() => ({ token, setToken }), [token]);
+  const value = useMemo(
+    () => ({
+      userToken,
+      setUserToken,
+      ongToken,
+      setOngToken,
+    }),
+    [userToken, ongToken]
+  );
 
   return (
     <AuthContext.Provider value={value}>
