@@ -17,7 +17,7 @@ import bg from "../../../public/ background-home.png";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 const loginOngSchema = z.object({
   email: z.string().email("E-mail é obrigatório"),
@@ -86,11 +86,10 @@ export default function AuthOng() {
                   control={methods.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="Seu Usuário" {...field} className="bg-zinc-100 text-zinc-400 ml-4" />
+                        <Input placeholder="Seu Usuário" {...field} className="bg-zinc-100 text-zinc-400 ml-4 mt-8" />
                       </FormControl>
-                      {errors.email && <FormMessage className="text-white">{errors.email.message}</FormMessage>}
+                      {errors.email && <FormMessage className="text-zinc-300">{errors.email.message}</FormMessage>}
                     </FormItem>
                   )}
                 />
@@ -99,15 +98,16 @@ export default function AuthOng() {
                   control={methods.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Password</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="Sua senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg ml-4" />
+                        <Input type="password" placeholder="Sua senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg ml-4 mt-6" />
                       </FormControl>
-                      {errors.password && <FormMessage className="text-white">{errors.password.message}</FormMessage>}
+                      {errors.password && <FormMessage className="text-zinc-300">{errors.password.message}</FormMessage>}
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-red-600 ml-4 mt-8 font-bold">Entrar</Button>
+                <Button type="submit" className="w-full bg-red-600 hover:bg-red-700 ml-4 mt-8 font-bold">
+                  Entrar
+                </Button>
               </form>
             </FormProvider>
         </div>
