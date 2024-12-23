@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { RxEnter } from "react-icons/rx";
+import { RxArrowLeft } from "react-icons/rx";
 import { z } from "zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -112,7 +113,14 @@ export default function AuthOng() {
         </div>
 
         <div className="mt-8">
-          <Button variant="ghost" className="w-full ml-4 font-bold text-sm" onClick={() => router.push('/register')}>
+          <Button variant="ghost" className="w-full ml-4 font-bold text-sm" onClick={() => router.push('/')}>
+            <RxArrowLeft color="red" size={24}/>
+            Voltar para o Login Usuário
+          </Button>
+        </div>
+
+        <div className="mt-8">
+          <Button variant="ghost" className="w-full ml-4 font-bold text-sm" onClick={() => router.push('/register-ong')}>
             <RxEnter color="red" size={24}/>
             Não tenho cadastro
           </Button>
