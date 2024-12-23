@@ -1,16 +1,17 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import axios, { AxiosError } from 'axios';
-import api from '@/lib/axios';
-import { useRouter } from "next/navigation";
-import { FaPowerOff } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { FaPowerOff } from 'react-icons/fa';
 
-import logoHeader from "../../../public/logo-header.png";
-import { Button } from "../ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import api from '@/lib/axios';
+import { Button } from "../ui/button";
+import logoHeader from "../../../public/logo-header.png";
+
 interface OngData {
   id: string;
   name: string;
@@ -24,60 +25,66 @@ interface OngData {
 export function HeaderOng() {
   const [userData, setUserData] = useState<OngData | null>(null);
   const router = useRouter();
-  const { token, setToken } = useAuth();
+  const { ongToken, setOngToken } = useAuth();
 
-  const fetchUserData = useCallback(async () => {
+  const fetchOngData = useCallback(async () => {
+    if (!ongToken) {
+      router.replace('/auth-ong');
+      return;
+    }
+
     try {
-      if (!token) {
-        router.push('/auth-ong');
-        throw new Error('No token available');
-      }
-
       const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${ongToken}`,
       };
-
+      
       const response = await api.post<OngData>('auth/me', {}, { headers });
       setUserData(response.data);
-
-      localStorage.setItem('userData', JSON.stringify(response.data));
+      localStorage.setItem('ongData', JSON.stringify(response.data));
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<any>;
         if (axiosError.response) {
-          if (axiosError.response.status === 401 || axiosError.response.data.error === 'Invalid Token') {
+          const status = axiosError.response.status;
+          const errorData = axiosError.response.data;
+
+          if (status === 401 || errorData.error === 'Invalid Token') {
             handleLogout();
           }
-          console.error('Error fetching user data:', axiosError.response.data);
-          toast.error(`Error fetching user data: ${axiosError.response.data.message}`, { theme: "light" });
+
+          console.error('Error fetching user data:', errorData);
+          toast.error(`Error fetching user data: ${errorData.message}`, { theme: 'light' });
         } else if (axiosError.request) {
-          console.error('Error fetching user data: No response from server.');
-          toast.error('Error fetching user data. No response from server.', { theme: "light" });
+          console.error('No response from server.');
+          toast.error('Error fetching user data. No response from server.', { theme: 'light' });
         } else {
-          console.error('Error fetching user data:', axiosError.message);
-          toast.error(`Error fetching user data: ${axiosError.message}`, { theme: "light" });
+          console.error('Error:', axiosError.message);
+          toast.error(`Error fetching user data: ${axiosError.message}`, { theme: 'light' });
         }
       } else {
         console.error('Unexpected error:', error);
+        toast.error('An unexpected error occurred.', { theme: 'light' });
       }
     }
-  }, [token, router, handleLogout]);
+  }, [ongToken, router]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authOngToken');
     if (storedToken) {
-      setToken(storedToken);
-      fetchUserData();
+      setOngToken(storedToken);
+      fetchOngData();
     } else {
       router.replace('/auth-ong');
     }
-  }, [setToken, fetchUserData, router]);
+  }, [setOngToken, fetchOngData, router]);
 
   function handleLogout() {
     localStorage.removeItem('authOngToken');
-    setToken(null);
-    toast.warn('Você saiu! Até breve...', { theme: "light" });
+    localStorage.removeItem('ongData');
+    setOngToken(null);
+    setUserData(null);
+    toast.warn('Você saiu! Até breve...', { theme: 'light' });
     router.replace('/auth-ong');
   }
 
@@ -86,28 +93,33 @@ export function HeaderOng() {
       <div className="container mx-auto px-3 py-3 h-full">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center">
-            <Image src={logoHeader} alt="Logo Header"/>
+            <Image src={logoHeader} alt="Logo Header" />
           </div>
           <div className="ml-4 p-2">
-            <Button variant="ghost">Bem vindo(a), {userData?.name ? userData.name : "Usuário"}</Button>
+            <Button variant="ghost">
+              Bem vindo(a), {userData?.name || 'Usuário'}
+            </Button>
           </div>
           <div className="ml-4 p-2">
-            <Button variant="secondary" className="w-full bg-red-600 hover:bg-red-700 ml-4 font-bold text-zinc-100 text-xs">
+            <Button
+              variant="secondary"
+              className="w-full bg-red-600 hover:bg-red-700 ml-4 font-bold text-zinc-100 text-xs"
+            >
               Cadastrar Novo Caso
             </Button>
           </div>
           <div>
-            <Button 
+            <Button
               onClick={handleLogout}
-              variant="outline" 
-              size="icon" 
+              variant="outline"
+              size="icon"
               className="bg-zinc-100 hover:bg-zinc-200"
             >
-              <FaPowerOff color="red" size={16}/>
+              <FaPowerOff color="red" size={16} />
             </Button>
           </div>
         </div>
       </div>
     </nav>
-  )
+  );
 }
