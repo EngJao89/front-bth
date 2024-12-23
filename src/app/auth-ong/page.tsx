@@ -36,7 +36,7 @@ export default function AuthOng() {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem('authOngToken');
       if (token) {
-        router.replace('/dashboard');
+        router.replace('/dashboard-ong');
       }
     }
   }, [router]);
@@ -53,7 +53,7 @@ export default function AuthOng() {
       if (response.data.accessToken) {
         localStorage.setItem('authOngToken', response.data.accessToken);
         toast.success(`Usuário Logado: ${data.email}, Seja Bem vindo!`, {theme: "light"})
-        router.replace('/dashboard');
+        router.replace('/dashboard-ong');
       } else {
         toast.error('Token não encontrado na resposta', {theme: "light"})
         throw new Error('Token não encontrado na resposta');
