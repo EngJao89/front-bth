@@ -7,7 +7,7 @@ import { RxArrowLeft } from "react-icons/rx";
 
 import logo from "../../../public/Logo.png"
 import { Button } from "@/components/ui/button";
-import { ProfileForm } from "@/components/forms";
+import { ProfileUserForm } from "@/components/forms-user";
 
 export default function UserRegister() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function UserRegister() {
 
           <Button variant="ghost" className="w-full mt-20 font-bold text-sm" onClick={() => router.push('/')}>
             <RxArrowLeft color="red" size={24}/>
-            Voltar para o Logon
+            Voltar para o Login de Usuário
           </Button>
 
           <Button variant="ghost" className="w-full mt-10 font-bold text-sm" onClick={() => router.push('/register-ong')}>
@@ -36,7 +36,7 @@ export default function UserRegister() {
         </div>
       </div>
       <div className="flex flex-col w-1/2 items-center justify-center">
-        <ProfileForm />
+        <ProfileUserForm />
       </div>
     </div>
   )

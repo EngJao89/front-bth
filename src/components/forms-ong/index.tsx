@@ -23,11 +23,13 @@ const registerSchema = z.object({
   email: z.string().email("E-mail é obrigatório"),
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
   phone: z.string().min(13, "O telefone deve ter pelo menos 13 caracteres"),
+  city: z.string().min(4, "Cidade deve ter pelo menos 4 caracteres"),
+  uf: z.string().min(2, "Estados deve ter pelo menos 2 caracteres"),
 });
 
 export type RegisterSchema = z.infer<typeof registerSchema>;
 
-export function ProfileForm() {
+export function ProfileOngForm() {
   const methods = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
   });
@@ -38,11 +40,13 @@ export function ProfileForm() {
   const onSubmit = async (data: RegisterSchema) => {
     try {
 
-      const response = await api.post('users', {
+      const response = await api.post('ongs', {
         name: data.name,
         email: data.email,
         password: data.password,
         phone: data.phone,
+        city: data.city,
+        uf: data.uf,
       });
 
       if(response.status === 200 || response.status === 201){
@@ -82,7 +86,7 @@ export function ProfileForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="name" {...field} className=""/>
+                <Input placeholder="Digite seu nome" {...field} className=""/>
               </FormControl>
               {errors.name && <FormMessage className="text-zinc-500">{errors.name.message}</FormMessage>}
             </FormItem>
@@ -95,7 +99,7 @@ export function ProfileForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Email" {...field} className="mt-4"/>
+                <Input placeholder="Digite um email válido" {...field} className="mt-4"/>
               </FormControl>
               {errors.email && <FormMessage className="text-zinc-500">{errors.email.message}</FormMessage>}
             </FormItem>
@@ -108,7 +112,7 @@ export function ProfileForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Password" {...field} className="mt-4"/>
+                <Input placeholder="Digite sua senha..." {...field} className="mt-4"/>
               </FormControl>
               {errors.password && <FormMessage className="text-zinc-500">{errors.password.message}</FormMessage>}
             </FormItem>
@@ -121,13 +125,41 @@ export function ProfileForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Phone" {...field} className="mt-4"/>
+                <Input placeholder="Digite seu telefone" {...field} className="mt-4"/>
               </FormControl>
               {errors.phone && <FormMessage className="text-zinc-500">{errors.phone.message}</FormMessage>}
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full mt-4">Submit</Button>
+
+        <div className="flex items-baseline">
+          <FormField
+            control={methods.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Digite sua cidade" {...field} className="mt-4 w-96"/>
+                </FormControl>
+                {errors.city && <FormMessage className="text-zinc-500">{errors.city.message}</FormMessage>}
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={methods.control}
+            name="uf"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="UF" {...field} className="ml-8 w-1/2"/>
+                </FormControl>
+                {errors.uf && <FormMessage className="text-zinc-500">{errors.uf.message}</FormMessage>}
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button type="submit" className="w-full mt-4">Cadastrar</Button>
       </form>
     </FormProvider>
   );
