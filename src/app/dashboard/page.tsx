@@ -1,10 +1,10 @@
 import { Card } from "@/components/card";
-import { Header } from "@/components/header";
+import { HeaderUser } from "@/components/headerUser";
 
 export default function Dashboard() {
   return (
     <>
-      <Header />
+      <HeaderUser />
       <div className="m-8">
         <div className="mt-20 ml-16">
           <h5 className="font-bold text-zinc-950 text-xl">Casos Cadastrados</h5>
