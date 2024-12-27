@@ -90,7 +90,11 @@ export function HeaderUser() {
             <Button variant="ghost">Bem vindo(a), {userData?.name ? userData.name : "Usuário"}</Button>
           </div>
           <div className="ml-4 p-2">
-            <Button variant="secondary" className="w-full bg-red-600 hover:bg-red-700 ml-4 font-bold text-zinc-100 text-xs">
+            <Button 
+              onClick={() => router.push('register-incident')}
+              variant="secondary" 
+              className="w-full bg-red-600 hover:bg-red-700 ml-4 font-bold text-zinc-100 text-xs"
+            >
               Cadastrar Novo Caso
             </Button>
           </div>

@@ -114,7 +114,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8">
-            <Button variant="ghost" className="w-full ml-4 font-bold text-sm" onClick={() => router.push('/register')}>
+            <Button variant="ghost" className="w-full ml-4 font-bold text-sm" onClick={() => router.push('/register-user')}>
               <RxEnter color="red" size={24}/>
               Não tenho cadastro
             </Button>
