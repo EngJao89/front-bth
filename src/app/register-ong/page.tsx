@@ -7,7 +7,6 @@ import { RxArrowLeft } from "react-icons/rx";
 import logo from "../../../public/Logo.png"
 import { Button } from "@/components/ui/button";
 import { ProfileOngForm } from "@/components/forms-ong";
-//import { ProfileForm } from "@/components/forms";
 
 export default function RegisterOng() {
   const router = useRouter();
