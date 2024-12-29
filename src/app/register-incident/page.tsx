@@ -5,6 +5,7 @@ import { RxArrowLeft } from "react-icons/rx";
 
 import logo from "../../../public/Logo.png";
 import { Button } from "@/components/ui/button";
+import { FormIncident } from "@/components/forms-incident";
 
 export default function RegisterIncident() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function RegisterIncident() {
       </div>
     </div>
     <div className="flex flex-col w-1/2 items-center justify-center">
-      {/* <ProfileOngForm /> */}
+      <FormIncident />
     </div>
   </div>
   )
