@@ -49,7 +49,7 @@ export default function Home() {
         throw new Error('Por favor, forneça o nome de usuário e a senha');
       }
 
-      const response = await api.post('auth/login', data);
+      const response = await api.post('auth/login', data, { withCredentials: true });
 
       if (response.data.accessToken) {
         localStorage.setItem('authToken', response.data.accessToken);
@@ -60,7 +60,6 @@ export default function Home() {
         throw new Error('Token não encontrado na resposta');
       }
     } catch (error) {
-      console.error('Erro:', error);
       if (axios.isAxiosError(error)) {
         const axiosError = error.response?.data?.message || 'Login falhou. Por favor, verifique suas credenciais e tente novamente.';
         toast.error(axiosError, {theme: "light"});

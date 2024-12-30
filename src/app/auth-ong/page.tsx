@@ -49,7 +49,7 @@ export default function AuthOng() {
         throw new Error('Por favor, forneça o nome de usuário e a senha');
       }
 
-      const response = await api.post('auth-ong/login', data);
+      const response = await api.post('auth-ong/login', data, { withCredentials: true });
 
       if (response.data.accessToken) {
         localStorage.setItem('authOngToken', response.data.accessToken);
