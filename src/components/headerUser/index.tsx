@@ -3,14 +3,15 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import axios, { AxiosError } from 'axios';
-import api from '@/lib/axios';
 import { useRouter } from "next/navigation";
 import { FaPowerOff } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+import api from '@/lib/axios';
+import { useAuth } from "@/contexts/AuthContext";
 import logoHeader from "../../../public/logo-header.png";
 import { Button } from "../ui/button";
-import { useAuth } from "@/contexts/AuthContext";
+
 interface UserData {
   id: string;
   name: string;
