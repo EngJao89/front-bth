@@ -29,6 +29,10 @@ export default function Home() {
   const router = useRouter();
   const methods = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   const { handleSubmit, formState: { errors } } = methods;
@@ -87,7 +91,12 @@ export default function Home() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input placeholder="Seu Usuário" {...field} className="bg-zinc-100 text-zinc-400 ml-4 mt-8" />
+                          <Input 
+                            placeholder="Seu Usuário" 
+                            {...field} 
+                            value={field.value || ''} 
+                            className="bg-zinc-100 text-zinc-400 ml-4 mt-8" 
+                          />
                         </FormControl>
                         {errors.email && <FormMessage className="text-zinc-300">{errors.email.message}</FormMessage>}
                       </FormItem>
@@ -99,7 +108,13 @@ export default function Home() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input type="password" placeholder="Sua Senha" {...field} className="bg-zinc-100 text-zinc-400 text-lg ml-4 mt-6" />
+                          <Input 
+                            type="password" 
+                            placeholder="Sua Senha" 
+                            {...field} 
+                            value={field.value || ''} 
+                            className="bg-zinc-100 text-zinc-400 text-lg ml-4 mt-6" 
+                          />
                         </FormControl>
                         {errors.password && <FormMessage className="text-zinc-300">{errors.password.message}</FormMessage>}
                       </FormItem>
