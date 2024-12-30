@@ -39,7 +39,7 @@ export function HeaderOng() {
         Authorization: `Bearer ${ongToken}`,
       };
       
-      const response = await api.post<OngData>('auth/me', {}, { headers });
+      const response = await api.post<OngData>('auth-ong/me', {}, { headers });
       setUserData(response.data);
       localStorage.setItem('ongData', JSON.stringify(response.data));
     } catch (error: any) {
