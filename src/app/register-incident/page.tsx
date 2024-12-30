@@ -22,7 +22,7 @@ export default function RegisterIncident() {
           Descreva o caso detalhadamente para<br/> encontrar um herói para resolver isso. 
         </h3>
 
-        <Button variant="ghost" className="w-full mt-20 font-bold text-base" onClick={() => router.push('/dashboard')}>
+        <Button variant="ghost" className="w-full mt-20 font-bold text-base" onClick={() => router.back()}>
           <RxArrowLeft color="red" size={24}/>
           Voltar para o Dashboard
         </Button>

@@ -1,12 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from 'axios';
-import api from "@/lib/axios";
 import { toast } from "react-toastify";
 
+import api from "@/lib/axios";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -15,8 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
-
 
 const registerSchema = z.object({
   name: z.string().min(3, "Nome de usuário é obrigatório"),

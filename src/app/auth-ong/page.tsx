@@ -9,12 +9,12 @@ import { z } from "zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from 'axios';
-import api from '@/lib/axios';
 import { toast } from "react-toastify";
 
 import logo from "../../../public/Logo.png";
 import bg from "../../../public/ background-home.png";
 
+import api from '@/lib/axios';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
