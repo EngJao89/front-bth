@@ -38,7 +38,7 @@ export function FormIncident() {
 
       if(response.status === 200 || response.status === 201){
         toast.success('Incidente criado com sucesso', {theme: "light"})
-        router.replace('/');
+        router.back();
       }
     } catch (error: any) {
       toast.error('Error:' +(error),  {theme: "light"});
