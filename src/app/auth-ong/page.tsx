@@ -64,7 +64,6 @@ export default function AuthOng() {
         throw new Error('Token não encontrado na resposta');
       }
     } catch (error) {
-      console.error('Erro:', error);
       if (axios.isAxiosError(error)) {
         const axiosError = error.response?.data?.message || 'Login falhou. Por favor, verifique suas credenciais e tente novamente.';
         toast.error(axiosError, {theme: "light"});

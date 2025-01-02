@@ -1,5 +1,7 @@
 'use client';
 
+import { FaRegTrashAlt } from "react-icons/fa";
+
 interface IncidentData {
   title: string;
   description: string;
@@ -13,8 +15,9 @@ interface CardProps {
 export function Card({ incident }: CardProps) {
   return (
     <div className="bg-zinc-200 w-10/12 rounded-md mx-3 my-4 p-3">
-      <div className="mt-4 mb-2">
+      <div className="flex mt-4 mb-2 justify-between">
         <h1 className="text-zinc-950 font-bold text-sm">Caso:</h1>
+        <FaRegTrashAlt size={12} color="gray"/>
       </div>
       <div>
         <h1 className="text-zinc-500 text-xs">{incident.title}</h1>

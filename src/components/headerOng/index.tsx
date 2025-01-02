@@ -53,17 +53,13 @@ export function HeaderOng() {
             handleLogout();
           }
 
-          console.error('Error fetching user data:', errorData);
           toast.error(`Error fetching user data: ${errorData.message}`, { theme: 'light' });
         } else if (axiosError.request) {
-          console.error('No response from server.');
           toast.error('Error fetching user data. No response from server.', { theme: 'light' });
         } else {
-          console.error('Error:', axiosError.message);
           toast.error(`Error fetching user data: ${axiosError.message}`, { theme: 'light' });
         }
       } else {
-        console.error('Unexpected error:', error);
         toast.error('An unexpected error occurred.', { theme: 'light' });
       }
     }
