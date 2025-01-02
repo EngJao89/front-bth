@@ -45,17 +45,14 @@ export function FormIncident() {
 
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          console.error('Server response:', error.response.data);
           toast.error(
             'O registro falhou: ' + (error.response.data.message || 
             'Por favor, verifique suas informações e tente novamente.'), 
             {theme: "light"}
             );
         } else if (error.request) {
-          console.error('Erro de solicitação:', error.request);
           toast.error('Falha no registro: Nenhuma resposta do servidor.', {theme: "light"});
         } else {
-          console.error('Unexpected error:', error.message);
           toast.error('O registro falhou: ' + error.message, {theme: "light"});
         }
       } else {
@@ -73,7 +70,7 @@ export function FormIncident() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Digite seu nome" {...field} className=""/>
+                <Input placeholder="Digite o título" {...field} className=""/>
               </FormControl>
               {errors.title && <FormMessage className="text-zinc-500">{errors.title.message}</FormMessage>}
             </FormItem>

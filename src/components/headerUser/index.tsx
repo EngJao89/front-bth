@@ -48,17 +48,14 @@ export function HeaderUser() {
           if (axiosError.response.status === 401 || axiosError.response.data.error === 'Invalid Token') {
             handleLogout();
           }
-          console.error('Error fetching user data:', axiosError.response.data);
           toast.error(`Error fetching user data: ${axiosError.response.data.message}`, { theme: "light" });
         } else if (axiosError.request) {
-          console.error('Error fetching user data: No response from server.');
           toast.error('Error fetching user data. No response from server.', { theme: "light" });
         } else {
-          console.error('Error fetching user data:', axiosError.message);
           toast.error(`Error fetching user data: ${axiosError.message}`, { theme: "light" });
         }
       } else {
-        console.error('Unexpected error:', error);
+        toast.error(`Unexpected error: ${error}`, { theme: "light" });
       }
     }
   }, [userToken, router, handleLogout]);

@@ -53,17 +53,14 @@ export function ProfileUserForm() {
 
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          console.error('Server response:', error.response.data);
           toast.error(
             'O registro falhou: ' + (error.response.data.message || 
             'Por favor, verifique suas informações e tente novamente.'), 
             {theme: "light"}
           );
         } else if (error.request) {
-          console.error('Erro de solicitação:', error.request);
           toast.error('Falha no registro: Nenhuma resposta do servidor.', {theme: "light"});
         } else {
-          console.error('Unexpected error:', error.message);
           toast.error('O registro falhou: ' + error.message, {theme: "light"});
         }
       } else {
