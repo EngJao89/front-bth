@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import axios, { AxiosError } from 'axios';
 import { toast } from "react-toastify";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
@@ -19,6 +20,8 @@ interface CardProps {
 }
 
 export function Card({ incident }: CardProps) {
+  const router = useRouter();
+
   const handleDeletePlayer = async (id: string) => {
     try {
 
@@ -42,7 +45,7 @@ export function Card({ incident }: CardProps) {
       <div className="flex mt-4 mb-2 justify-between">
         <h1 className="text-zinc-950 font-bold text-sm">Caso:</h1>
         <div>
-          <Button variant="ghost" className="mt-0 mr-1">
+          <Button variant="ghost" className="mt-0 mr-1" onClick={() => router.push('/edit-incident')}>
             <FaPencilAlt size={12} color="gray"/>
           </Button>
           <Button variant="ghost" onClick={() => handleDeletePlayer(incident.id)}>
