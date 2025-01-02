@@ -41,7 +41,7 @@ export default function Home() {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem('authToken');
       if (token) {
-        router.replace('/dashboard');
+        router.replace('/dashboard-user');
       }
     }
   }, [router]);
@@ -58,7 +58,7 @@ export default function Home() {
       if (response.data.accessToken) {
         localStorage.setItem('authToken', response.data.accessToken);
         toast.success(`Usuário Logado: ${data.email}, Seja Bem vindo!`, {theme: "light"})
-        router.replace('/dashboard');
+        router.replace('/dashboard-user');
       } else {
         toast.error('Token não encontrado na resposta', {theme: "light"})
         throw new Error('Token não encontrado na resposta');
