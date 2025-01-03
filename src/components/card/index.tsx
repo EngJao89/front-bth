@@ -78,7 +78,7 @@ export function Card({ incident }: CardProps) {
       <Button
         variant="ghost"
         className="w-full mt-4 justify-between font-bold text-sm text-red-600 hover:text-red-700"
-        onClick={() => router.push('/details-incident')}
+        onClick={() => router.push(`/details-incident?id=${incident.id}`)}
       >
         Ver mais detalhes
         <RxArrowRight color="red" size={24} />
