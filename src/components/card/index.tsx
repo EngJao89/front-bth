@@ -7,6 +7,8 @@ import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 
 import api from "@/lib/axios";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
+import { RxArrowRight } from "react-icons/rx";
 
 interface IncidentData {
   id: string;
@@ -70,6 +72,17 @@ export function Card({ incident }: CardProps) {
       <div className="mb-4">
         <h1 className="text-zinc-500 text-xs">R$ {incident.value}</h1>
       </div>
+
+      <Separator className="bg-white"/>
+
+      <Button
+        variant="ghost"
+        className="w-full mt-4 justify-between font-bold text-sm text-red-600 hover:text-red-700"
+        onClick={() => router.push('/details-incident')}
+      >
+        Ver mais detalhes
+        <RxArrowRight color="red" size={24} />
+      </Button>
     </div>
   );
 }
