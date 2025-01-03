@@ -65,7 +65,7 @@ export default function AuthOng() {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error.response?.data?.message || 'Login falhou. Por favor, verifique suas credenciais e tente novamente.';
+        const axiosError = 'Login falhou. Por favor, verifique suas credenciais e tente novamente.';
         toast.error(axiosError, {theme: "light"});
       } else {
         toast.error('Ocorreu um erro inesperado. Tente novamente mais tarde.', {theme: "light"});

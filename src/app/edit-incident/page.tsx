@@ -37,7 +37,6 @@ export default function EditIncident() {
   const onSubmit = async (data: RegisterSchema) => {
     try {
       const response = await api.put(`incidents/${id}`, data);
-      console.log(response.data);
       toast.success("Incidente atualizado com sucesso");
       router.back();
     } catch (error) {
