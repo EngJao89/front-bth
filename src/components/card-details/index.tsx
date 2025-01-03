@@ -1,7 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
-import axios, { AxiosError } from 'axios';
+import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 import api from "@/lib/axios";
@@ -19,7 +18,6 @@ interface CardProps {
   incident: IncidentData;
 }
 export function CardDetails({ incident }: CardProps) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
@@ -41,27 +39,48 @@ export function CardDetails({ incident }: CardProps) {
   }, [id]);
 
   return (
-    <div className="bg-zinc-200 w-full rounded-md mx-3 my-4 p-3">
-      <div className="flex mt-4 mb-2 justify-between">
-        <h1 className="text-zinc-950 font-bold text-sm">Caso:</h1>
-      </div>
-      <div>
-        <h1 className="text-zinc-500 text-xs">{incident.title}</h1>
-      </div>
+    <>
+      <div className="bg-zinc-200 w-full rounded-md mx-3 my-4 p-3">
+        <div className="flex mt-4 mb-2 justify-between">
+          <h1 className="text-zinc-950 font-bold text-sm">Caso:</h1>
+        </div>
+        <div>
+          <h1 className="text-zinc-500 text-xs">{incident.title}</h1>
+        </div>
 
-      <div className="mt-4 mb-2">
-        <h1 className="text-zinc-950 font-bold text-sm">Descrição:</h1>
-      </div>
-      <div>
-        <h1 className="text-zinc-500 text-xs">{incident.description}</h1>
-      </div>
+        <div className="mt-4 mb-2">
+          <h1 className="text-zinc-950 font-bold text-sm">Descrição:</h1>
+        </div>
+        <div>
+          <h1 className="text-zinc-500 text-xs">{incident.description}</h1>
+        </div>
 
-      <div className="mt-4 mb-2">
-        <h1 className="text-zinc-950 font-bold text-sm">Valor:</h1>
+        <div className="mt-4 mb-2">
+          <h1 className="text-zinc-950 font-bold text-sm">Valor:</h1>
+        </div>
+        <div className="mb-4">
+          <h1 className="text-zinc-500 text-xs">R$ {incident.value}</h1>
+        </div>
       </div>
-      <div className="mb-4">
-        <h1 className="text-zinc-500 text-xs">R$ {incident.value}</h1>
+      <div className="bg-zinc-200 w-full rounded-md mx-3 my-4 p-3">
+        <div className="flex mt-4 mb-2 justify-between">
+          <h1 className="text-zinc-950 font-bold text-sm">
+            Salve o dia!<br />
+            Seja o herói desse caso.
+          </h1>
+        </div>
+        <div>
+          <h1 className="text-zinc-500 text-xs">Entre em contato:</h1>
+        </div>
+        <div className="flex items-baseline">
+          <Button className="w-1/2 mt-4 ml-2 mb-4 bg-red-600 hover:bg-red-700">
+            Whatsapp
+          </Button>
+          <Button className="w-1/2 mt-4 ml-2 mb-4 bg-red-600 hover:bg-red-700">
+            Email
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
