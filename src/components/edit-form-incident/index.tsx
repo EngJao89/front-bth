@@ -1,15 +1,15 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
-import axios from 'axios';
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
 
 import api from "@/lib/axios";
 import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
 
 const registerSchema = z.object({
   title: z.string().min(3, "Título é obrigatório"),
@@ -19,47 +19,50 @@ const registerSchema = z.object({
 
 export type RegisterSchema = z.infer<typeof registerSchema>;
 
-export function FormIncident() {
+interface FormIncidentProps {
+  id: string;
+  title: string;
+  description: string;
+  value: string;
+}
+
+interface EditCardProps {
+  id: FormIncidentProps;
+  onSubmit: (data: RegisterSchema) => Promise<void>;
+}
+
+export function EditFormIncident({ id, onSubmit }: EditCardProps) {
+  const router = useRouter();
   const methods = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
   });
 
-  const { handleSubmit, formState: { errors } } = methods;
-  const router = useRouter();
+  const { handleSubmit, formState: { errors }, reset } = methods;
+  const [loading, setLoading] = useState(true);
 
-  const onSubmit = async (data: RegisterSchema) => {
-    try {
+  useEffect(() => {
+    const fetchIncident = async () => {
+      try {
+        const response = await api.get(`incidents/${id}`);
 
-      const response = await api.post('incidents', {
-        title: data.title,
-        description: data.description,
-        value: data.value,
-      });
-
-      if(response.status === 200 || response.status === 201){
-        toast.success('Incidente criado com sucesso', {theme: "light"})
-        router.back();
+        reset({
+          title: response.data.title || "",
+          description: response.data.description || "",
+          value: response.data.value || "",
+        });
+      } catch (error) {
+        toast.error("Erro ao carregar os dados do incidente");
+      } finally {
+        setLoading(false);
       }
-    } catch (error: any) {
-      toast.error('Error:' +(error),  {theme: "light"});
+    };
 
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          toast.error(
-            'O registro falhou: ' + (error.response.data.message || 
-            'Por favor, verifique suas informações e tente novamente.'), 
-            {theme: "light"}
-            );
-        } else if (error.request) {
-          toast.error('Falha no registro: Nenhuma resposta do servidor.', {theme: "light"});
-        } else {
-          toast.error('O registro falhou: ' + error.message, {theme: "light"});
-        }
-      } else {
-        toast.error('Ocorreu um erro inesperado. Tente novamente mais tarde.', {theme: "light"});
-      }
-    }
-  };
+    fetchIncident();
+  }, [id, reset]);
+
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <FormProvider {...methods}>
@@ -70,7 +73,7 @@ export function FormIncident() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Digite o título" {...field} className=""/>
+                <Input placeholder="Digite o título" {...field} />
               </FormControl>
               {errors.title && <FormMessage className="text-zinc-500">{errors.title.message}</FormMessage>}
             </FormItem>
@@ -83,7 +86,7 @@ export function FormIncident() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea placeholder="Descrição do incidente" {...field} className="mt-4"/>
+                <Textarea placeholder="Descrição do incidente" {...field} className="mt-4" />
               </FormControl>
               {errors.description && <FormMessage className="text-zinc-500">{errors.description.message}</FormMessage>}
             </FormItem>
@@ -96,7 +99,7 @@ export function FormIncident() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Valores em Reais" {...field} className="mt-4"/>
+                <Input placeholder="Valores em Reais" {...field} className="mt-4" />
               </FormControl>
               {errors.value && <FormMessage className="text-zinc-500">{errors.value.message}</FormMessage>}
             </FormItem>
@@ -105,9 +108,9 @@ export function FormIncident() {
 
         <div className="flex items-baseline">
           <Button onClick={() => router.back()} className="w-1/2 mt-4 mr-2">Cancelar</Button>
-          <Button type="submit" className="w-1/2 mt-4 ml-2 bg-red-600 hover:bg-red-700">Cadastrar</Button>
+          <Button type="submit" className="w-1/2 mt-4 ml-2 bg-red-600 hover:bg-red-700">Salvar</Button>
         </div>
       </form>
     </FormProvider>
-  )
+  );
 }
