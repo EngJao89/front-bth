@@ -45,7 +45,7 @@ export function Card({ incident }: CardProps) {
       <div className="flex mt-4 mb-2 justify-between">
         <h1 className="text-zinc-950 font-bold text-sm">Caso:</h1>
         <div>
-          <Button variant="ghost" className="mt-0 mr-1" onClick={() => router.push('/edit-incident')}>
+          <Button variant="ghost" className="mt-0 mr-1" onClick={() => router.push(`/edit-incident?id=${incident.id}`)}>
             <FaPencilAlt size={12} color="gray"/>
           </Button>
           <Button variant="ghost" onClick={() => handleDeletePlayer(incident.id)}>
