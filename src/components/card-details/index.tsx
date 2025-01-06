@@ -6,11 +6,14 @@ import { toast } from "react-toastify";
 import api from "@/lib/axios";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 
 interface IncidentData {
   id: string;
   title: string;
   description: string;
+  email: string;
+  whatsapp: string;
   value: string;
 }
 
@@ -62,6 +65,7 @@ export function CardDetails({ incident }: CardProps) {
           <h1 className="text-zinc-500 text-xs">R$ {incident.value}</h1>
         </div>
       </div>
+
       <div className="bg-zinc-200 w-full rounded-md mx-3 my-4 p-3">
         <div className="flex mt-4 mb-2 justify-between">
           <h1 className="text-zinc-950 font-bold text-sm">
@@ -73,12 +77,33 @@ export function CardDetails({ incident }: CardProps) {
           <h1 className="text-zinc-500 text-xs">Entre em contato:</h1>
         </div>
         <div className="flex items-baseline">
-          <Button className="w-1/2 mt-4 mb-4 bg-red-600 hover:bg-red-700">
-            Whatsapp
-          </Button>
-          <Button className="w-1/2 mt-4 ml-4 mb-4 bg-red-600 hover:bg-red-700">
-            Email
-          </Button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="w-1/2 mt-4 mb-4 bg-red-600 hover:bg-red-700">
+                Whatsapp
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-full bg-zinc-600 text-white text-sm">
+              <div>
+                <h4 className="font-medium leading-none">{incident.whatsapp}</h4>
+              </div>
+            </PopoverContent>
+          </Popover>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="w-1/2 mt-4 ml-4 mb-4 bg-red-600 hover:bg-red-700">
+                Email
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-full bg-zinc-600 text-white text-sm">
+              <div>
+                <h4 className="font-medium leading-none">{incident.email}</h4>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </>
