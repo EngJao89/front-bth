@@ -14,6 +14,8 @@ import { Button } from "../ui/button";
 const registerSchema = z.object({
   title: z.string().min(3, "Título é obrigatório"),
   description: z.string().min(15, "Descrição é obrigatória"),
+  email: z.string().email("E-mail é obrigatório"),
+  whatsapp: z.string().min(13, "O telefone deve ter pelo menos 13 caracteres"),
   value: z.string().min(4, "Insira um valor válido"),
 });
 
@@ -23,6 +25,8 @@ interface FormIncidentProps {
   id: string;
   title: string;
   description: string;
+  email: string;
+  whatsapp: string;
   value: string;
 }
 
@@ -48,6 +52,8 @@ export function EditFormIncident({ id, onSubmit }: EditCardProps) {
         reset({
           title: response.data.title || "",
           description: response.data.description || "",
+          email: response.data.email || "",
+          whatsapp: response.data.whatsapp || "",
           value: response.data.value || "",
         });
       } catch (error) {
@@ -89,6 +95,32 @@ export function EditFormIncident({ id, onSubmit }: EditCardProps) {
                 <Textarea placeholder="Descrição do incidente" {...field} className="mt-4" />
               </FormControl>
               {errors.description && <FormMessage className="text-zinc-500">{errors.description.message}</FormMessage>}
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={methods.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Digite o seu email de contato" {...field} className="mt-4" />
+              </FormControl>
+              {errors.email && <FormMessage className="text-zinc-500">{errors.email.message}</FormMessage>}
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={methods.control}
+          name="whatsapp"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Digite o seu o whatsapp de contato" {...field} className="mt-4" />
+              </FormControl>
+              {errors.whatsapp && <FormMessage className="text-zinc-500">{errors.whatsapp.message}</FormMessage>}
             </FormItem>
           )}
         />

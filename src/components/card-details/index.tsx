@@ -73,10 +73,10 @@ export function CardDetails({ incident }: CardProps) {
           <h1 className="text-zinc-500 text-xs">Entre em contato:</h1>
         </div>
         <div className="flex items-baseline">
-          <Button className="w-1/2 mt-4 ml-2 mb-4 bg-red-600 hover:bg-red-700">
+          <Button className="w-1/2 mt-4 mb-4 bg-red-600 hover:bg-red-700">
             Whatsapp
           </Button>
-          <Button className="w-1/2 mt-4 ml-2 mb-4 bg-red-600 hover:bg-red-700">
+          <Button className="w-1/2 mt-4 ml-4 mb-4 bg-red-600 hover:bg-red-700">
             Email
           </Button>
         </div>

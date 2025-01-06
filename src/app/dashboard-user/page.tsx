@@ -51,7 +51,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 mt-6 ml-16">
+      <div className="grid grid-cols-2 gap-6 mt-6 mb-16 ml-16">
         {incidents.map((incident) => (
           <Card key={incident.id} incident={incident} />
         ))}
