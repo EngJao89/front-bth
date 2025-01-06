@@ -15,7 +15,7 @@ const registerSchema = z.object({
   title: z.string().min(3, "Título é obrigatório"),
   description: z.string().min(15, "Descrição é obrigatória"),
   email: z.string().email("E-mail é obrigatório"),
-  whatsapp: z.string().min(13, "O telefone deve ter pelo menos 13 caracteres"),
+  whatsapp: z.string().min(13, "O whatsapp deve ter pelo menos 13 caracteres"),
   value: z.string().min(4, "Insira um valor válido"),
 });
 
