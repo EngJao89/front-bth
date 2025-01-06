@@ -97,7 +97,7 @@ export default function AuthOng() {
                           className="bg-zinc-100 text-zinc-400 ml-4 mt-8" 
                         />
                       </FormControl>
-                      {errors.email && <FormMessage className="text-zinc-300">{errors.email.message}</FormMessage>}
+                      {errors.email && <FormMessage className="ml-4 text-zinc-400">{errors.email.message}</FormMessage>}
                     </FormItem>
                   )}
                 />
@@ -115,7 +115,7 @@ export default function AuthOng() {
                           className="bg-zinc-100 text-zinc-400 text-lg ml-4 mt-6" 
                         />
                       </FormControl>
-                      {errors.password && <FormMessage className="text-zinc-300">{errors.password.message}</FormMessage>}
+                      {errors.password && <FormMessage className="ml-4 text-zinc-400">{errors.password.message}</FormMessage>}
                     </FormItem>
                   )}
                 />
