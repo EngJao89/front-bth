@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from "next/navigation";
+import { RxClipboardCopy } from "react-icons/rx";
 import { toast } from "react-toastify";
 
 import api from "@/lib/axios";
@@ -40,6 +41,14 @@ export function CardDetails({ incident }: CardProps) {
       fetchIncident();
     }
   }, [id]);
+
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast.success("Copiado para a área de transferência!");
+    }).catch(() => {
+      toast.error("Erro ao copiar para a área de transferência");
+    });
+  };
 
   return (
     <>
@@ -86,7 +95,14 @@ export function CardDetails({ incident }: CardProps) {
 
             <PopoverContent className="w-full bg-zinc-600 text-white text-sm">
               <div>
-                <h4 className="font-medium leading-none">{incident.whatsapp}</h4>
+                <Button 
+                  variant="ghost" 
+                  className="hover:bg-zinc-500 font-medium leading-none"
+                  onClick={() => handleCopyToClipboard(incident.whatsapp)}
+                >
+                  {incident.whatsapp}
+                  <RxClipboardCopy color="white" size={14}/>
+                </Button>
               </div>
             </PopoverContent>
           </Popover>
@@ -100,7 +116,14 @@ export function CardDetails({ incident }: CardProps) {
 
             <PopoverContent className="w-full bg-zinc-600 text-white text-sm">
               <div>
-                <h4 className="font-medium leading-none">{incident.email}</h4>
+                <Button 
+                  variant="ghost" 
+                  className="hover:bg-zinc-500 font-medium leading-none"
+                  onClick={() => handleCopyToClipboard(incident.email)}
+                >
+                  {incident.email}
+                  <RxClipboardCopy color="white" size={14}/>
+                </Button>
               </div>
             </PopoverContent>
           </Popover>
