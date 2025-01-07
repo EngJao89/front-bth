@@ -83,14 +83,18 @@ export function HeaderUser() {
         <div className="flex w-full items-center justify-around">
           <Image src={logoHeader} alt="Logo Header" className="ml-8"/>
 
-          <Button variant="ghost" className="ml-8 mr-16">
+          <Button 
+            variant="ghost" 
+            className="ml-8 mr-16" 
+            onClick={() => router.push('profile-user')}
+          >
             Bem vindo(a), {userData?.name ? userData.name : "Usuário"}
           </Button>
 
           <Button 
-            onClick={() => router.push('register-incident')}
             variant="secondary" 
             className="w-1/3 p-2 ml-8 mr-3 bg-red-600 hover:bg-red-700 font-bold text-zinc-100 text-xs"
+            onClick={() => router.push('register-incident')}
           >
             Cadastrar Novo Caso
           </Button>

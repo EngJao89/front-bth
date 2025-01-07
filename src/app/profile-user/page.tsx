@@ -11,7 +11,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function ProfileOng() {
+export default function ProfileUser() {
   const router = useRouter();
   return (
     <div className="flex justify-between items-center h-screen">
@@ -20,9 +20,10 @@ export default function ProfileOng() {
           <Image src={logo} alt="Logo" />
         </div>
         <div className="mt-16">
-          <h5 className="text-zinc-950 font-bold text-2xl">Perfil de Ong</h5>
+          <h5 className="text-zinc-950 font-bold text-2xl">Perfil de Usuário</h5>
           <h3 className="text-zinc-400 text-sm mt-6">
-            Este é seu perfil de Ong com todas informações,<br /> aqui você pode checar e editar sua infos.
+            Este é seu perfil de Usuário com todas suas<br />  
+            informações, aqui você pode checar e editar suas infos.
           </h3>
 
           <Button
@@ -49,26 +50,15 @@ export default function ProfileOng() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="name">Nome</Label>
-                  <Input id="name" defaultValue="ASPAAN" className="bg-white"/>
+                  <Input id="name" defaultValue="Rafaela Rabelo Barbosa" className="bg-white"/>
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="username">Email</Label>
-                  <Input id="username" defaultValue="aspaan.ong@gmail.com" className="bg-white"/>
+                  <Input id="username" defaultValue="rafaela.rb@gmail.com" className="bg-white"/>
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="name">Telefone</Label>
-                  <Input id="name" defaultValue="5562995166462" className="bg-white"/>
-                </div>
-                <div className="space-y-1 flex items-baseline">
-                  <div className="w-96">
-                    <Label htmlFor="username">Cidade</Label>
-                    <Input id="username" defaultValue="Anápolis" className="bg-white"/>
-                  </div>
-
-                  <div className="ml-8 w-1/2">
-                    <Label htmlFor="username">UF</Label>
-                    <Input id="username" defaultValue="GO" className="bg-white"/>
-                  </div>
+                  <Input id="name" defaultValue="5562975311306" className="bg-white"/>
                 </div>
               </CardContent>
               <CardFooter>
