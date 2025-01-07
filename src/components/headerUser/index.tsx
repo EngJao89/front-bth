@@ -58,7 +58,7 @@ export function HeaderUser() {
         toast.error(`Unexpected error: ${error}`, { theme: "light" });
       }
     }
-  }, [userToken, router, handleLogout]);
+  }, [userToken, router]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
@@ -78,34 +78,31 @@ export function HeaderUser() {
   }
 
   return (
-    <nav className="w-full bg-zinc-300 bg-opacity-30 backdrop-blur-lg">
-      <div className="container mx-auto px-3 py-3 h-full">
-        <div className="flex flex-wrap items-center justify-between">
-          <div className="flex items-center">
-            <Image src={logoHeader} alt="Logo Header"/>
-          </div>
-          <div className="ml-4 p-2">
-            <Button variant="ghost">Bem vindo(a), {userData?.name ? userData.name : "Usuário"}</Button>
-          </div>
-          <div className="ml-4 p-2">
-            <Button 
-              onClick={() => router.push('register-incident')}
-              variant="secondary" 
-              className="w-full bg-red-600 hover:bg-red-700 ml-4 font-bold text-zinc-100 text-xs"
-            >
-              Cadastrar Novo Caso
-            </Button>
-          </div>
-          <div>
-            <Button 
-              onClick={handleLogout}
-              variant="outline" 
-              size="icon" 
-              className="bg-zinc-100 hover:bg-zinc-200"
-            >
-              <FaPowerOff color="red" size={16}/>
-            </Button>
-          </div>
+    <nav className="bg-zinc-300 bg-opacity-30 backdrop-blur-lg">
+      <div className="w-full h-full px-3 py-3">
+        <div className="flex w-full items-center justify-around">
+          <Image src={logoHeader} alt="Logo Header" className="ml-8"/>
+
+          <Button variant="ghost" className="ml-8 mr-16">
+            Bem vindo(a), {userData?.name ? userData.name : "Usuário"}
+          </Button>
+
+          <Button 
+            onClick={() => router.push('register-incident')}
+            variant="secondary" 
+            className="w-1/3 p-2 ml-8 mr-3 bg-red-600 hover:bg-red-700 font-bold text-zinc-100 text-xs"
+          >
+            Cadastrar Novo Caso
+          </Button>
+
+          <Button 
+            onClick={handleLogout}
+            variant="outline" 
+            size="icon" 
+            className="p-2 mr-3 bg-zinc-100 hover:bg-zinc-200"
+          >
+            <FaPowerOff color="red" size={16}/>
+          </Button>
         </div>
       </div>
     </nav>
