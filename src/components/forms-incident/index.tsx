@@ -133,10 +133,7 @@ export function FormIncident() {
           )}
         />
 
-        <div className="flex items-baseline">
-          <Button onClick={() => router.back()} className="w-1/2 mt-4 mr-2">Cancelar</Button>
-          <Button type="submit" className="w-1/2 mt-4 ml-2 bg-red-600 hover:bg-red-700">Cadastrar</Button>
-        </div>
+        <Button type="submit" className="w-full mt-4 bg-red-600 hover:bg-red-700">Cadastrar</Button>
       </form>
     </FormProvider>
   )
