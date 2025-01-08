@@ -1,18 +1,94 @@
 'use client';
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import axios, { AxiosError } from 'axios';
 import { RxArrowLeft } from "react-icons/rx";
 
+import api from '@/lib/axios';
+import { useAuth } from "@/contexts/AuthContext";
 import logo from "../../../public/Logo.png";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from '@radix-ui/themes';
+
+interface OngData {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  accessToken: string;
+  city: string;
+  uf: string;
+}
 
 export default function ProfileOng() {
+  const [userData, setUserData] = useState<OngData | null>(null);
   const router = useRouter();
+  const { ongToken, setOngToken } = useAuth();
+
+  const fetchOngData = useCallback(async () => {
+    if (!ongToken) {
+      router.replace('/auth-ong');
+      return;
+    }
+
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${ongToken}`,
+      };
+      
+      const response = await api.post<OngData>('auth-ong/me', {}, { headers });
+      setUserData(response.data);
+      localStorage.setItem('ongData', JSON.stringify(response.data));
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<any>;
+        if (axiosError.response) {
+          const status = axiosError.response.status;
+          const errorData = axiosError.response.data;
+
+          if (status === 401 || errorData.error === 'Invalid Token') {
+            handleLogout();
+          }
+
+          toast.error(`Error fetching user data: ${errorData.message}`, { theme: 'light' });
+        } else if (axiosError.request) {
+          toast.error('Error fetching user data. No response from server.', { theme: 'light' });
+        } else {
+          toast.error(`Error fetching user data: ${axiosError.message}`, { theme: 'light' });
+        }
+      } else {
+        toast.error('An unexpected error occurred.', { theme: 'light' });
+      }
+    }
+  }, [ongToken, router]);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authOngToken');
+    if (storedToken) {
+      setOngToken(storedToken);
+      fetchOngData();
+    } else {
+      router.replace('/auth-ong');
+    }
+  }, [setOngToken, fetchOngData, router]);
+
+  function handleLogout() {
+    localStorage.removeItem('authOngToken');
+    localStorage.removeItem('ongData');
+    setOngToken(null);
+    setUserData(null);
+    toast.warn('Você saiu! Até breve...', { theme: 'light' });
+    router.replace('/auth-ong');
+  }
+
   return (
     <div className="flex justify-between items-center h-screen">
       <div className="flex flex-col w-1/2 items-center justify-center">
@@ -47,29 +123,37 @@ export default function ProfileOng() {
                 <CardTitle>Conta</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="name">Nome</Label>
-                  <Input id="name" defaultValue="ASPAAN" className="bg-white"/>
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="username">Email</Label>
-                  <Input id="username" defaultValue="aspaan.ong@gmail.com" className="bg-white"/>
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="name">Telefone</Label>
-                  <Input id="name" defaultValue="5562995166462" className="bg-white"/>
-                </div>
-                <div className="space-y-1 flex items-baseline">
-                  <div className="w-96">
-                    <Label htmlFor="username">Cidade</Label>
-                    <Input id="username" defaultValue="Anápolis" className="bg-white"/>
-                  </div>
+                {userData ? (
+                  <>
+                    <div className="space-y-1">
+                      <Label htmlFor="name">Nome</Label>
+                      <Input id="name" defaultValue={userData.name} className="bg-white"/>
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="username">Email</Label>
+                      <Input id="username" defaultValue={userData.email} className="bg-white"/>
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="name">Telefone</Label>
+                      <Input id="name" defaultValue={userData.phone} className="bg-white"/>
+                    </div>
+                    <div className="space-y-1 flex items-baseline">
+                      <div className="w-96">
+                        <Label htmlFor="username">Cidade</Label>
+                        <Input id="username" defaultValue={userData.city}className="bg-white"/>
+                      </div>
 
-                  <div className="ml-8 w-1/2">
-                    <Label htmlFor="username">UF</Label>
-                    <Input id="username" defaultValue="GO" className="bg-white"/>
-                  </div>
-                </div>
+                      <div className="ml-8 w-1/2">
+                        <Label htmlFor="username">UF</Label>
+                        <Input id="username" defaultValue={userData.uf} className="bg-white"/>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Skeleton />
+                  </>
+                )}
               </CardContent>
               <CardFooter>
                 <Button className="bg-red-600 hover:bg-red-700 font-bold">
