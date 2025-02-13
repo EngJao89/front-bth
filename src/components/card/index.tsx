@@ -14,6 +14,7 @@ interface IncidentData {
   id: string;
   title: string;
   description: string;
+  ong: string;
   value: string;
 }
 
@@ -66,11 +67,24 @@ export function Card({ incident }: CardProps) {
         <h1 className="text-zinc-500 text-xs">{incident.description}</h1>
       </div>
 
-      <div className="mt-4 mb-2">
-        <h1 className="text-zinc-950 font-bold text-sm">Valor:</h1>
-      </div>
-      <div className="mb-4">
-        <h1 className="text-zinc-500 text-xs">R$ {incident.value}</h1>
+      <div className="flex justify-between">
+        <div>
+          <div className="mt-4 mb-2">
+            <h1 className="text-zinc-950 font-bold text-sm">Valor:</h1>
+          </div>
+          <div className="mb-4">
+            <h1 className="text-zinc-500 text-xs">R$ {incident.value}</h1>
+          </div>
+        </div>
+
+        <div>
+          <div className="mt-4 mb-2">
+            <h1 className="text-zinc-950 font-bold text-sm">ONG:</h1>
+          </div>
+          <div className="mb-4">
+            <h1 className="text-zinc-500 text-xs">{incident.ong}</h1>
+          </div>
+        </div>
       </div>
 
       <Separator className="bg-white"/>
