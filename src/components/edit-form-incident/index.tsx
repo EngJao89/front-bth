@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-toastify";
@@ -14,6 +13,7 @@ import { Button } from "../ui/button";
 const registerSchema = z.object({
   title: z.string().min(3, "Título é obrigatório"),
   description: z.string().min(15, "Descrição é obrigatória"),
+  ong: z.string().min(3, "ONG é obrigatória"),
   email: z.string().email("E-mail é obrigatório"),
   whatsapp: z.string().min(13, "O whatsapp deve ter pelo menos 13 caracteres"),
   value: z.string().min(4, "Insira um valor válido"),
@@ -25,6 +25,7 @@ interface FormIncidentProps {
   id: string;
   title: string;
   description: string;
+  ong: string;
   email: string;
   whatsapp: string;
   value: string;
@@ -36,7 +37,6 @@ interface EditCardProps {
 }
 
 export function EditFormIncident({ id, onSubmit }: EditCardProps) {
-  const router = useRouter();
   const methods = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
   });
@@ -52,6 +52,7 @@ export function EditFormIncident({ id, onSubmit }: EditCardProps) {
         reset({
           title: response.data.title || "",
           description: response.data.description || "",
+          ong: response.data.ong || "",
           email: response.data.email || "",
           whatsapp: response.data.whatsapp || "",
           value: response.data.value || "",
@@ -95,6 +96,23 @@ export function EditFormIncident({ id, onSubmit }: EditCardProps) {
                 <Textarea placeholder="Descrição do incidente" {...field} className="mt-4" />
               </FormControl>
               {errors.description && <FormMessage className="text-zinc-500">{errors.description.message}</FormMessage>}
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={methods.control}
+          name="ong"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input 
+                  placeholder="Digite a ONG responsável pelo incidente" 
+                  {...field} 
+                  className="mt-4" 
+                />
+              </FormControl>
+              {errors.ong && <FormMessage className="text-zinc-500">{errors.ong.message}</FormMessage>}
             </FormItem>
           )}
         />
